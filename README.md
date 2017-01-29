@@ -5,7 +5,9 @@ Version: 1.01 (January 29th, 2017)
 Current Supporting UE4 Engine: 4.14.3
 
 Authors: Matthias Mueller, Neil Smith and Bernard Ghanem
+
 For Citation: https://ivul.kaust.edu.sa/Pages/pub-benchmark-simulator-uav.aspx
+
 License: See License.txt
 
 Contributors: Special thanks to Rama for inspiration from VictoryPlugin. The Car is based off Peter L. Newton's Car AI (https://forums.unrealengine.com/showthread.php?25073-Community-A-I-Project-(Dev-Thread)-Bot-Car-and-soon-Flying-AI). The current level is from the startere content of UE4. The S1000 is adapted for UE4 from Google 3D Warehouse by Torsten L (https://3dwarehouse.sketchup.com/model.html?id=u2dd74708-c644-4e69-925d-9c60d9c51aec)
