@@ -116,11 +116,17 @@ All Controls are handled through keyboad
 8. In order to use all the classes and receive input in your new project you need to drop into your level several generic actors (see sim_default as example):
 
 -Simulator/Camera/CamLogger
+
 -Simulator/DefaultLevel/LevelInputActor
+
 -Simulator/DefaultLevel/SimulationActor
+
 -Simulator/Multirotor/Blueprints/MultiRotorMBZIRC
+
 -Simulator/Multirotor/Blueprints/VisionControlBasic
+
 -Simulator/Rover/Blueprints/Rover
+
 -Simulator/Rover/Blueprints/AiBuggyVH
 
 9. Click on Each of these Actors and assign the multirotor or Rover to the actor (Use the dripper button to select).
