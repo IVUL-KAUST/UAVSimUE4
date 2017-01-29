@@ -8,7 +8,7 @@ Authors: Matthias Mueller, Neil Smith and Bernard Ghanem
 
 For Citation: https://ivul.kaust.edu.sa/Pages/pub-benchmark-simulator-uav.aspx
 
-License: See License.txt
+License: See LICENSE file
 
 Contributors: Special thanks to Rama for inspiration from VictoryPlugin. The Car is based off Peter L. Newton's Car AI (https://forums.unrealengine.com/showthread.php?25073-Community-A-I-Project-(Dev-Thread)-Bot-Car-and-soon-Flying-AI). The current level is from the startere content of UE4. The S1000 is adapted for UE4 from Google 3D Warehouse by Torsten L (https://3dwarehouse.sketchup.com/model.html?id=u2dd74708-c644-4e69-925d-9c60d9c51aec)
 
@@ -24,13 +24,13 @@ This current github version uses the starter level from the UE4 launcher. The co
 
 -Current version is compatible for UE4 Release (Please install from Epic Launcher...See top of Readme for Supported Version)
 
--Unzip project into folder
+-Clone project into folder
 
--Launch VehicleGame.uproject
+-Launch UAVSimUE4.uproject
 
 -Note that on first run the Loading... will get to 94% and 95% and will compile all shaders (this can take from 30min to 2 hours depending on your system).
 
--For the simulator to store frames or logs you must set the directory in the FlyingPawn blueprint (Simulator/Multirotor/FlyingPawn)**
+-For the simulator to store frames or logs you must set the directory in the SimSettings.ini file found in the "Config" folder**
 
 -In order to replay logs you must set the log directories in the Sim Settings.ini file found in the "Config" folder. 
 
