@@ -1,6 +1,7 @@
-# UE4 Flight Simulator Readme
+# UE4 UAV Flight Simulator
 
 Version: 1.01 (January 29th, 2017)
+
 Current Supporting UE4 Engine: 4.14.3
 
 Authors: Matthias Mueller, Neil Smith and Bernard Ghanem
