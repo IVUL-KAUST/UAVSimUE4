@@ -1,0 +1,22 @@
+{
+	"FileVersion" : 3,
+	
+	"FriendlyName" : "Simulator",
+	"Version" : 1,
+	"VersionName" : "1.0",
+	"CreatedBy" : "Neil Smith",
+	"CreatedByURL" : "https://ivul.kaust.edu.sa/Pages/pub-benchmark-simulator-uav.aspx",
+	"EngineVersion" : "4.13.0",
+	"Description" : "Tools for using UE4 as a Simulator",
+	"Category" : "Simulator",
+	"EnabledByDefault" : true,
+	
+	"Modules" :
+	[
+		{
+			"Name" : "Simulator",
+      "Type": "Runtime",
+      "LoadingPhase" : "PreDefault"
+		}
+	]
+}
