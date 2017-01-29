@@ -23,15 +23,20 @@ This current github version uses the starter level from the UE4 launcher. The co
 ## Install Instructions
 
 -Current version is compatible for UE4 Release (Please install from Epic Launcher...See top of Readme for Supported Version)
+
 -Unzip project into folder
+
 -Launch VehicleGame.uproject
+
 -Note that on first run the Loading... will get to 94% and 95% and will compile all shaders (this can take from 30min to 2 hours depending on your system).
 
 -For the simulator to store frames or logs you must set the directory in the FlyingPawn blueprint (Simulator/Multirotor/FlyingPawn)**
 
 -In order to replay logs you must set the log directories in the Sim Settings.ini file found in the "Config" folder. 
 
-**If you don't have an SSD, setup a RamDisk for storing frames to reduce latency. --Note we currently are implementing a UDP network to allow direct memory transfer into Matlab, QT, or ROS connected computer.
+**If you don't have an SSD, setup a RamDisk for storing frames to reduce latency. 
+
+--Note we currently are implementing a UDP network to allow direct memory transfer into Matlab, QT, or ROS connected computer.
 
 ## Compiling
 
@@ -110,16 +115,15 @@ All Controls are handled through keyboad
 7. Load Your New Project or New Level (If compiled with the same engine, you will not need to recompile). 
 8. In order to use all the classes and receive input in your new project you need to drop into your level several generic actors (see sim_default as example):
 
-Simulator/Camera/CamLogger
-Simulator/DefaultLevel/LevelInputActor
-Simulator/DefaultLevel/SimulationActor
-Simulator/Multirotor/Blueprints/MultiRotorMBZIRC
-Simulator/Multirotor/Blueprints/VisionControlBasic
-Simulator/Rover/Blueprints/Rover
-Simulator/Rover/Blueprints/AiBuggyVH
+-Simulator/Camera/CamLogger
+-Simulator/DefaultLevel/LevelInputActor
+-Simulator/DefaultLevel/SimulationActor
+-Simulator/Multirotor/Blueprints/MultiRotorMBZIRC
+-Simulator/Multirotor/Blueprints/VisionControlBasic
+-Simulator/Rover/Blueprints/Rover
+-Simulator/Rover/Blueprints/AiBuggyVH
 
 9. Click on Each of these Actors and assign the multirotor or Rover to the actor (Use the dripper button to select).
-
 10. For each actor under Input set Auto Receive Input to Player0. 
 11. Set Gamemode. Blueprints->WorldOveride->Edit Vive Game Mode
 12. Play in Editor
