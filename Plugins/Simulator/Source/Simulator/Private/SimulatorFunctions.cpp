@@ -537,7 +537,60 @@ FBoundingBox USimulatorFunctions::readBBTextfile(const FString FilePath)
 	bb.result = result;
 	return bb;
 }
+FBoundingBox USimulatorFunctions::readBBFString(const FString result)
+{
+	//FString result = "";
+	//FFileHelper::LoadFileToString(result, *FilePath);
 
+	TArray<FString> stringData;
+	const FString comma = ",";
+	int32 num = 0;
+	num = result.ParseIntoArray(stringData, *comma);
+
+	FBoundingBox bb;
+	FVector2D center;
+	FVector extents;
+	int32 x;
+	int32 y;
+	int32 w;
+	int32 h;
+	if (num < 4)
+	{
+		x = 0;
+		y = 0;
+		w = 0;
+		h = 0;
+	}
+	else
+	{
+
+
+		x = FCString::Atoi(*stringData[0]);
+		y = FCString::Atoi(*stringData[1]);
+		w = FCString::Atoi(*stringData[2]);
+		h = FCString::Atoi(*stringData[3]);
+	}
+
+
+	extents.X = x;
+	extents.Y = x + w;
+	extents.Z = y + h;
+	bb.extents = extents;
+	bb.xMin = x;
+	bb.xMax = x + w;
+	bb.yMin = y;
+	bb.yMax = y + h;
+
+	center.X = (bb.xMax - bb.xMin) / 2 + bb.xMin;
+	center.Y = (bb.yMax - bb.yMin) / 2 + bb.yMin;
+	bb.center = center;
+
+	//	bb.xMax = stringData.Max();
+	//bb.yMax = stringData.Num();
+	//	bb.xMin = num;
+	bb.result = result;
+	return bb;
+}
 bool USimulatorFunctions::saveBBTextfile(const FString FilePath, FString frame, FBoundingBox bb)
 {
 
@@ -547,6 +600,15 @@ bool USimulatorFunctions::saveBBTextfile(const FString FilePath, FString frame, 
 	text.Append(FString::SanitizeFloat(bb.xMin) + "," + FString::SanitizeFloat(bb.yMin) + "," + FString::SanitizeFloat(width) + "," + FString::SanitizeFloat(height));
 
 	FFileHelper::SaveStringToFile(text, *FilePath);
+	return true;
+}
+bool USimulatorFunctions::sendBBTextfile(FString TheIP, int32 ThePort, FString frame, FBoundingBox bb)
+{
+	int32 width = bb.xMax - bb.xMin;
+	int32 height = bb.yMax - bb.yMin;
+	FString text = "";
+	text.Append(FString::SanitizeFloat(bb.xMin) + "," + FString::SanitizeFloat(bb.yMin) + "," + FString::SanitizeFloat(width) + "," + FString::SanitizeFloat(height));
+	sendStringDatagram(TheIP, ThePort, text);
 	return true;
 }
 bool USimulatorFunctions::saveWayPoints(const FString FilePath, TArray<FVector> wayPoints)
@@ -660,6 +722,44 @@ FSimSettingsData USimulatorFunctions::loadSimSetings()
 	}
 	return simData;
 }
+bool USimulatorFunctions::sendStringDatagram(FString TheIP, int32 ThePort, FString data)
+{
+	TSharedPtr<FInternetAddr>	RemoteAddr;
+	FSocket* SenderSocket;
+
+
+	RemoteAddr = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateInternetAddr();
+
+	bool bIsValid;
+	FString YourChosenSocketName = "Joe";
+	TheIP = "127.0.0.1";
+	ThePort = 8891;
+	RemoteAddr->SetIp(*TheIP, bIsValid);
+	RemoteAddr->SetPort(ThePort);
+
+	if (!bIsValid)
+	{
+		return false;
+	}
+
+	SenderSocket = FUdpSocketBuilder(*YourChosenSocketName)
+		.AsReusable()
+		.WithBroadcast()
+		;
+	int32 BytesSent = 0;
+
+	FString serialized = data;
+	//serialized = FString::FromInt(sizeD) + " " + FString::FromInt(alSize) + " " + FString::FromInt(numSize) + " " + FString::FromInt(uSize);
+	TCHAR *serializedChar = serialized.GetCharArray().GetData();
+	int32 size = FCString::Strlen(serializedChar);
+	int32 sent = 0;
+	uint8* dataGram = (uint8*)TCHAR_TO_UTF8(serializedChar);
+	
+	SenderSocket->SendTo(dataGram, size, BytesSent, *RemoteAddr);
+
+	return true;
+
+}
 bool USimulatorFunctions::sendDatagram(class USceneCaptureComponent2D* Target)
 {
 	TSharedPtr<FInternetAddr>	RemoteAddr;
@@ -670,14 +770,13 @@ bool USimulatorFunctions::sendDatagram(class USceneCaptureComponent2D* Target)
 
 	bool bIsValid;
 	FString YourChosenSocketName = "Joe";
-	FString TheIP = "239.255.43.21";
-	int32 ThePort = 45454;
+	FString TheIP = "127.0.0.1";
+	int32 ThePort = 8890;
 	RemoteAddr->SetIp(*TheIP, bIsValid);
 	RemoteAddr->SetPort(ThePort);
 
 	if (!bIsValid)
 	{
-		//ScreenMsg("Rama UDP Sender>> IP address was not valid!", TheIP);
 		return false;
 	}
 
@@ -730,14 +829,9 @@ bool USimulatorFunctions::sendDatagram(class USceneCaptureComponent2D* Target)
 				numSize = dataIm.Num();
 				uSize = dataIm.Num() * sizeof(uint8);
 			}
-			FString serialized = "Hello World";
-			serialized = FString::FromInt(sizeD) + " " + FString::FromInt(alSize) + " " + FString::FromInt(numSize) + " " + FString::FromInt(uSize);
-			TCHAR *serializedChar = serialized.GetCharArray().GetData();
-			int32 size = FCString::Strlen(serializedChar);
-			int32 sent = 0;
-			uint8* dataGram = (uint8*)TCHAR_TO_UTF8(serializedChar);
-		    //SenderSocket->SendTo(dataGram, size, BytesSent, *RemoteAddr);
-			SenderSocket->SendTo(dataIm.GetData(), alSize, BytesSent, *RemoteAddr);
+			
+		    SenderSocket->SendTo(dataIm.GetData(), dataIm.Num(), BytesSent, *RemoteAddr);
+			
 		}
 		
 	}
@@ -848,3 +942,59 @@ bool USimulatorFunctions::saveSimSetings(FSimSettingsData simData)
 	FFileHelper::SaveStringToFile(result, *settingsPath);
 	return true;
 }
+/*
+bool USimulatorFunctions::StartUDPReceiver(
+	const FString& YourChosenSocketName,
+	const FString& TheIP,
+	const int32 ThePort
+) {
+
+	//ScreenMsg("RECEIVER INIT");
+
+	//~~~
+
+	FIPv4Address Addr;
+	FIPv4Address::Parse(TheIP, Addr);
+
+	//Create Socket
+	FIPv4Endpoint Endpoint(Addr, ThePort);
+
+	//BUFFER SIZE
+	int32 BufferSize = 2 * 1024 * 1024;
+
+	ListenSocket = FUdpSocketBuilder(*YourChosenSocketName)
+		.AsNonBlocking()
+		.AsReusable()
+		.BoundToEndpoint(Endpoint)
+		.WithReceiveBufferSize(BufferSize);
+	;
+
+	FTimespan ThreadWaitTime = FTimespan::FromMilliseconds(100);
+	UDPReceiver = new FUdpSocketReceiver(ListenSocket, ThreadWaitTime, TEXT("UDP RECEIVER"));
+	UDPReceiver->OnDataReceived().BindUObject(this, &USimulatorFunctions::Recv);
+
+	return true;
+}
+
+void USimulatorFunctions::Recv(const FArrayReaderPtr& ArrayReaderPtr, const FIPv4Endpoint& EndPt)
+{
+	//ScreenMsg("Received bytes", ArrayReaderPtr->Num());
+
+	//FAnyCustomData Data;
+	//*ArrayReaderPtr << Data;		//Now de-serializing! See AnyCustomData.h
+
+									//BP Event
+	//BPEvent_DataReceived(Data);
+}
+//public:
+FSocket* ListenSocket;
+
+FUdpSocketReceiver* UDPReceiver = nullptr;
+void Recv(const FArrayReaderPtr& ArrayReaderPtr, const FIPv4Endpoint& EndPt);
+
+bool StartUDPReceiver(
+const FString& YourChosenSocketName,
+const FString& TheIP,
+const int32 ThePort
+);
+*/

@@ -292,6 +292,9 @@ public:
 			static FBoundingBox readBBTextfile(const FString FilePath);
 
 		UFUNCTION(Category = "Simulator|SceneCapture", BlueprintCallable)
+			static FBoundingBox readBBFString(const FString result);
+
+		UFUNCTION(Category = "Simulator|SceneCapture", BlueprintCallable)
 			static TArray<FString> getDirList(const FString FilePath, FString Ext);
 
 		UFUNCTION(Category = "Simulator|SceneCapture", BlueprintCallable)
@@ -313,6 +316,9 @@ public:
 			static bool saveBBTextfile(const FString FilePath, FString frame, FBoundingBox bb);
 
 		UFUNCTION(Category = "Simulator|SceneCapture", BlueprintCallable)
+			static bool sendBBTextfile(FString TheIP, int32 ThePort, FString frame, FBoundingBox bb);
+
+		UFUNCTION(Category = "Simulator|SceneCapture", BlueprintCallable)
 			static FSimSettingsData loadSimSetings();
 
 		UFUNCTION(Category = "Simulator|SceneCapture", BlueprintCallable)
@@ -321,19 +327,7 @@ public:
 		UFUNCTION(Category = "Simulator|SceneCapture", BlueprintCallable)
 			static bool sendDatagram(class USceneCaptureComponent2D* Target);
 
-	//	USTRUCT(BlueprintType)
-	//	struct FTheSerialData
-	//	{
-	//		TArray<uint8> imageData;
-			
-			//FTheSerialData()
-			//{}
-		//};
-		
-		//FORCEINLINE FArchive& operator<<(FArchive &Ar, FTheSerialData& theData)
-		//{
+		UFUNCTION(Category = "Simulator|SceneCapture", BlueprintCallable)
+			static bool sendStringDatagram(FString TheIP, int32 ThePort, FString data);
 
-			//Ar << theData.imageData;
-			//return Ar;
-		//}
 };

@@ -1,0 +1,49 @@
+%IP Address (for sending data)
+host='127.0.0.1';
+
+%Remote port
+remPort=8890; 
+portNumber = 8891;
+bbportNumber = 8891;
+%Maximum packet length
+packetLength = 100000;
+%Timeout in ms
+timeout = 10000; 
+
+%Loop Receiving images
+global KEY_IS_PRESSED
+
+KEY_IS_PRESSED = 0;
+
+
+gcf
+
+set(gcf, 'KeyPressFcn', @myKeyPressFcn)
+drawnow
+
+%Wait until get Bbox init
+bbString = judp('receive',portNumber,packetLength,timeout);
+bbLength = length(bbString);
+if (bbLength > 0)  
+    while (false)
+
+      
+
+      %disp('looping...')
+
+
+
+%Receive message
+byteArray = judp('receive',remPort,packetLength,timeout);
+
+%Decode JPEG
+img = decode_jpeg (byteArray);
+
+%Display image
+imshow(img)
+
+%Send fake Bbox
+%"253.0,95.0,133.0,165.0";
+judp('send',portNumber,host,int8(bbString));
+    end
+end
