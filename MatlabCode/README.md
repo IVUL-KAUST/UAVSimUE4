@@ -1,5 +1,6 @@
 # Scale and Motion Adaptive Correlation Filter Tracker (SMACF)
-This is the Matlab code for SMACF which was submitted to VOT16 with integration to use it with our simulator. Our proposed tracker builds on top of the popular KCF (Kernelized Correlation Filter) tracker by adding several improvements while maintaining real-time speed (>30fps). We integrate Colorname and HOG features. We make the cell size adaptive with regard to target size in order to ensure sufficient resolution of the object being tracked. Moreover, we implement a first order motion model to improve robustness to camera motion. Lastly, we perform a weighted scale search at each iteration for more accurate bounding boxes.
+This is the Matlab code for SMACF which was submitted to VOT16 with integration to use it with our simulator. Our proposed tracker builds on top of the popular KCF (Kernelized Correlation Filter) tracker by adding several improvements while maintaining real-time speed (>30fps). 
+We integrate Colorname and HOG features. We make the cell size adaptive with regard to target size in order to ensure sufficient resolution of the object being tracked. Moreover, we implement a first order motion model to improve robustness to camera motion. Lastly, we perform a weighted scale search at each iteration for more accurate bounding boxes.
 
 ## Test UDP connection
 - Start the simulator and fly the UAV above the car (N to increase altitude, arrow keys to navigate, H to enable the view from the UAV).
