@@ -111,8 +111,12 @@ void ASimUDPReceiver::Recv(const FArrayReaderPtr& ArrayReaderPtr, const FIPv4End
 		char* charString = reinterpret_cast<char*>(dataL);
 		std::string typeStd;
 		std::string topicStd;
+
+		typeStd = "sim_msgs/BoundingBox";
+		topicStd = "Matlab";
+		int m = 0;
 		
-		
+/*		
 		int m = 4;
 		int g = 0;
 		for (int i = m; i < ArrayReaderPtr->Num(); i++)
@@ -151,6 +155,7 @@ void ASimUDPReceiver::Recv(const FArrayReaderPtr& ArrayReaderPtr, const FIPv4End
 				g = 0;
 			}
 		}
+*/
 		FString type = FString(typeStd.c_str());
 		FString topic = FString(topicStd.c_str());
 

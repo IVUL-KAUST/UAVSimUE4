@@ -731,9 +731,9 @@ bool USimulatorFunctions::sendStringDatagram(FString TheIP, int32 ThePort, FStri
 	RemoteAddr = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateInternetAddr();
 
 	bool bIsValid;
-	FString YourChosenSocketName = "Joe";
+	FString YourChosenSocketName = "TX_BB";
 	TheIP = "127.0.0.1";
-	ThePort = 8891;
+	ThePort = 25001;
 	RemoteAddr->SetIp(*TheIP, bIsValid);
 	RemoteAddr->SetPort(ThePort);
 
@@ -757,6 +757,9 @@ bool USimulatorFunctions::sendStringDatagram(FString TheIP, int32 ThePort, FStri
 	
 	SenderSocket->SendTo(dataGram, size, BytesSent, *RemoteAddr);
 
+	SenderSocket->Close();
+	ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->DestroySocket(SenderSocket);
+
 	return true;
 
 }
@@ -769,9 +772,9 @@ bool USimulatorFunctions::sendDatagram(class USceneCaptureComponent2D* Target)
 	RemoteAddr = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateInternetAddr();
 
 	bool bIsValid;
-	FString YourChosenSocketName = "Joe";
+	FString YourChosenSocketName = "TX_Image";
 	FString TheIP = "127.0.0.1";
-	int32 ThePort = 8890;
+	int32 ThePort = 25000;
 	RemoteAddr->SetIp(*TheIP, bIsValid);
 	RemoteAddr->SetPort(ThePort);
 
@@ -831,6 +834,8 @@ bool USimulatorFunctions::sendDatagram(class USceneCaptureComponent2D* Target)
 			}
 			
 		    SenderSocket->SendTo(dataIm.GetData(), dataIm.Num(), BytesSent, *RemoteAddr);
+			SenderSocket->Close();
+			ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->DestroySocket(SenderSocket);
 			
 		}
 		

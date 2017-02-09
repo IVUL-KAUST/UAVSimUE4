@@ -329,5 +329,4 @@ public:
 
 		UFUNCTION(Category = "Simulator|SceneCapture", BlueprintCallable)
 			static bool sendStringDatagram(FString TheIP, int32 ThePort, FString data);
-
 };

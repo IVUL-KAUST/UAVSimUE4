@@ -27,7 +27,7 @@ byteArray = judp('receive',imgPortRx,packetLength,timeout/10);
 img = decode_jpeg (byteArray);
 
 %Display image (disable to see real frame rate)
-imshow(img)
+%imshow(img)
 
 frame = frame +1;
 time = toc;

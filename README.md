@@ -95,13 +95,17 @@ All Controls are handled through keyboad
 
 ## Running Simulator with Matlab
 
--Get Matlab project from website
--Run set tracker
--Matlab will loop printing "waiting" until simulator outputs first init file.
--Start UE4 Simulator
--Press T (Starts GT Tracker, to center Copter over car)
--Press Y (Writes Initial Bounding Box and will wait for Matlab to output gt.txt file for updated bounding box)
--Press R to run Vehicle or optionally use car controls to drive car manually.
+### Test UDP connection
+- Start the simulator and fly the UAV above the car (N to increase altitude, arrow keys to navigate, H to enable the view from the UAV).
+- When the UAV is positioned press T to start tracking using the groundtruth.
+- Now run the udp_test.m file in Matlab. You will see the framerate displayed in the command window. Optionally you can display the image feed. 
+
+### Run Tracker
+- Start the UE4 simulator and fly the UAV above the car (N to increase altitude, arrow keys to navigate, H to enable the view from the UAV).
+- When the UAV is positioned press Y to enable feedback from a vision algorithm (This is important! If you don't do this step, the groundtruth will be used for tracking).
+- Now run the run_tracker.m file in Matlab. You will see messages on the screen, that the tracker is waiting for data from the simulator. 
+- Click on the window of the simulator to bring it into scope and press T to start tracking. 
+- Press R to run vehicle or optionally use car controls to drive car manually.
 
 
 ## Creating a New Level or Completly New Project
