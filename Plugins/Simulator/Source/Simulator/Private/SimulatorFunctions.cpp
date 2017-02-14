@@ -763,6 +763,7 @@ bool USimulatorFunctions::sendStringDatagram(FString TheIP, int32 ThePort, FStri
 	return true;
 
 }
+
 bool USimulatorFunctions::sendDatagram(class USceneCaptureComponent2D* Target)
 {
 	TSharedPtr<FInternetAddr>	RemoteAddr;
@@ -788,8 +789,6 @@ bool USimulatorFunctions::sendDatagram(class USceneCaptureComponent2D* Target)
 		.WithBroadcast()
 		;
 	int32 BytesSent = 0;
-
-	
 
 	if (true)
 	{
@@ -821,19 +820,20 @@ bool USimulatorFunctions::sendDatagram(class USceneCaptureComponent2D* Target)
 			IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(EImageFormat::JPEG);
 			int32 alSize =0;
 			int32 numSize =0;
-			int32 uSize = 0;
+			//int32 uSize = 0;
 			TArray<uint8> dataIm;
 			
 			if (ImageWrapper.IsValid() && ImageWrapper->SetRaw(&RawPixels[0], RawPixels.Num() * sizeof(FColor), Width, Height, ERGBFormat::BGRA, 8))
 			{
 				//FFileHelper::SaveArrayToFile(ImageWrapper->GetCompressed(), *ImagePath);
-				dataIm = ImageWrapper->GetCompressed();
+				dataIm = ImageWrapper->GetCompressed(50);
 				alSize = dataIm.GetAllocatedSize();
 				numSize = dataIm.Num();
-				uSize = dataIm.Num() * sizeof(uint8);
+				//uSize = dataIm.Num() * sizeof(uint8);
 			}
 			
 		    SenderSocket->SendTo(dataIm.GetData(), dataIm.Num(), BytesSent, *RemoteAddr);
+
 			SenderSocket->Close();
 			ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->DestroySocket(SenderSocket);
 			
